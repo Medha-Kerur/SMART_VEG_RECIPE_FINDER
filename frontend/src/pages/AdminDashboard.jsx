@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import { Trash2, Edit, Loader2, Plus, X, Save } from 'lucide-react';
+import API_BASE from '../api';
 
 const EMPTY_FORM = {
   name: '',
@@ -27,7 +28,7 @@ const AdminDashboard = () => {
 
   const fetchRecipes = async () => {
     try {
-      const res = await axios.get('http://localhost:5005/api/admin/recipes', {
+      const res = await axios.get(`${API_BASE}/api/admin/recipes`, {
         headers: authHeader,
       });
       setRecipes(res.data);
@@ -77,7 +78,7 @@ const AdminDashboard = () => {
     if (!formData.name.trim()) return setFormError('Recipe name is required');
     setSaving(true); setFormError('');
     try {
-      const res = await axios.post('http://localhost:5005/api/admin/recipes', toPayload(), { headers: authHeader });
+      const res = await axios.post(`${API_BASE}/api/admin/recipes`, toPayload(), { headers: authHeader });
       setRecipes(prev => [res.data, ...prev]);
       closeModal();
     } catch (err) {
@@ -90,7 +91,7 @@ const AdminDashboard = () => {
     setSaving(true); setFormError('');
     try {
       const res = await axios.put(
-        `http://localhost:5005/api/admin/recipes/${editingRecipe._id}`,
+        `${API_BASE}/api/admin/recipes/${editingRecipe._id}`,
         toPayload(),
         { headers: authHeader }
       );
@@ -104,7 +105,7 @@ const AdminDashboard = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this recipe? This cannot be undone.')) return;
     try {
-      await axios.delete(`http://localhost:5005/api/admin/recipes/${id}`, { headers: authHeader });
+      await axios.delete(`${API_BASE}/api/admin/recipes/${id}`, { headers: authHeader });
       setRecipes(prev => prev.filter(r => r._id !== id));
     } catch { alert('Error deleting recipe'); }
   };

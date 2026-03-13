@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Clock, CheckCircle2, Sparkles } from 'lucide-react';
+import API_BASE from '../api';
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -10,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const res = await axios.get('http://localhost:5005/api/recipes/search?ingredients=');
+        const res = await axios.get(`${API_BASE}/api/recipes/search`);
         setRecipes(res.data);
       } catch (err) {
         setError('Could not connect to backend to load recipes.');

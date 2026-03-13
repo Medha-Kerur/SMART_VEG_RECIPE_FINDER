@@ -4,6 +4,7 @@ import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import AIGenerator from '../components/recipes/AIGenerator';
 import { ChefHat } from 'lucide-react';
+import API_BASE from '../api';
 
 const AddRecipe = () => {
   const { user } = useContext(AuthContext);
@@ -52,7 +53,7 @@ const AddRecipe = () => {
       };
 
       await axios.post(
-        'http://localhost:5005/api/recipes/add',
+        `${API_BASE}/api/recipes/add`,
         recipePayload,
         {
           headers: { Authorization: `Bearer ${user.token}` }

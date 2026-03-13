@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE from '../api';
 
 const AuthContext = createContext();
 
@@ -13,7 +14,7 @@ export const AuthProvider = ({ children }) => {
       if (stored) {
         const parsed = JSON.parse(stored);
         try {
-          const res = await axios.get('http://localhost:5005/api/auth/me', {
+          const res = await axios.get(`${API_BASE}/api/auth/me`, {
             headers: { Authorization: `Bearer ${parsed.token}` },
           });
           setUser({ ...res.data, token: parsed.token });
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const { data } = await axios.post('http://localhost:5005/api/auth/login', { email, password });
+      const { data } = await axios.post(`${API_BASE}/api/auth/login`, { email, password });
       localStorage.setItem('user', JSON.stringify(data));
       setUser(data);
       return { success: true };
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const { data } = await axios.post('http://localhost:5005/api/auth/register', { name, email, password });
+      const { data } = await axios.post(`${API_BASE}/api/auth/register`, { name, email, password });
       localStorage.setItem('user', JSON.stringify(data));
       setUser(data);
       return { success: true };

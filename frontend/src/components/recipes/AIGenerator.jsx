@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Sparkles, Loader2, CheckCircle2 } from 'lucide-react';
+import API_BASE from '../../api';
 
 const AIGenerator = ({ onIngredientsGenerated, userToken }) => {
   const [prompt, setPrompt] = useState('');
@@ -18,7 +19,7 @@ const AIGenerator = ({ onIngredientsGenerated, userToken }) => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5005/api/recipes/generate-ingredients',
+        `${API_BASE}/api/recipes/generate-ingredients`,
         { prompt },
         { headers: { Authorization: `Bearer ${userToken}` } }
       );
