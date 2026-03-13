@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AddRecipe from './pages/AddRecipe';
 import AdminDashboard from './pages/AdminDashboard';
+import RecipeDetail from './pages/RecipeDetail';
 import { PrivateRoute, AdminRoute } from './components/layout/ProtectedRoutes';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
               </AdminRoute>
             } 
           />
+          <Route path="/recipe/:id" element={<RecipeDetail />} />
         </Routes>
       </div>
     </Router>
